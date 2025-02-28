@@ -1,4 +1,4 @@
-.exe
-.sum
-.mod
-.yml
+fortifyApp.exe
+go.sum
+go.mod
+docker-compose.yml
