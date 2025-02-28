@@ -1,0 +1,36 @@
+# version: "3.9"
+
+# services:
+  # fortify-app:
+  #   image: fortify-app:latest
+  #   build: .
+  #   container_name: fortify_app_container
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     DB_HOST: postgres
+  #     DB_PORT: 5432
+  #     DB_USER: fortify_user
+  #     DB_PASSWORD: VtOlBD9o8dKOzSH
+  #     DB_NAME: fortify_db
+  #   depends_on:
+  #     - postgres
+
+#   postgres:
+#     image: "postgres:latest"
+#     restart: always
+#     ports:
+#       - "5432:5432"
+#     container_name: postgres_container
+#     environment:
+#       POSTGRES_USER: fortifyuser 
+#       POSTGRES_PASSWORD: mypassword
+#       POSTGRES_DB: fortifydb
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
+
+# volumes:  
+#   postgres_data:
+
+# networks:
+#   backend:

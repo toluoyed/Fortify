@@ -1,0 +1,238 @@
+definitions:
+  members.Member:
+    properties:
+      cohort:
+        type: string
+      createdAt:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      phone_number:
+        type: string
+      session1:
+        type: boolean
+      session2:
+        type: boolean
+      session3:
+        type: boolean
+      session4:
+        type: boolean
+      status:
+        $ref: '#/definitions/members.Status'
+      year:
+        type: integer
+    type: object
+  members.Status:
+    enum:
+    - COMPLETE
+    - INCOMPLETE
+    type: string
+    x-enum-varnames:
+    - StatusComplete
+    - StatusIncomplete
+  users.Role:
+    enum:
+    - SUPERUSER
+    - USER
+    type: string
+    x-enum-varnames:
+    - SuperUserRole
+    - UserRole
+  users.User:
+    properties:
+      createdAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+      role:
+        $ref: '#/definitions/users.Role'
+    type: object
+info:
+  contact: {}
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Login
+      tags:
+      - users
+  /members:
+    get:
+      consumes:
+      - application/json
+      description: Get all fortify member
+      parameters:
+      - description: Cohort Year
+        in: query
+        name: year
+        type: integer
+      - description: Cohort
+        in: query
+        name: cohort
+        type: string
+      - description: Completion Status
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/members.Member'
+            type: array
+        "400":
+          description: Bad Request
+      summary: Get all members
+      tags:
+      - members
+    post:
+      consumes:
+      - application/json
+      description: Create a single fortify member
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Create a member
+      tags:
+      - members
+  /members/{id}:
+    delete:
+      description: Delete a fortify member using member ID
+      parameters:
+      - description: Member ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Delete a member
+      tags:
+      - members
+    post:
+      consumes:
+      - application/json
+      description: Update a fortify member using member ID
+      parameters:
+      - description: Member ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Update a member
+      tags:
+      - members
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload a CSV file that contains fortify members
+      parameters:
+      - description: CSV file to upload
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Upload a file
+      tags:
+      - file-upload
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/users.User'
+            type: array
+        "400":
+          description: Bad Request
+      summary: Get all users
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      description: Delete a user using member ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Delete a user
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Update user details and information
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Update a user
+      tags:
+      - users
+swagger: "2.0"
