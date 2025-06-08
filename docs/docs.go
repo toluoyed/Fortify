@@ -28,6 +28,26 @@ const docTemplate = `{
                     "users"
                 ],
                 "summary": "Login",
+                "parameters": [
+                    {
+                        "description": "Username to login",
+                        "name": "username",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Password to login",
+                        "name": "password",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -178,8 +198,22 @@ const docTemplate = `{
                     {
                         "type": "file",
                         "description": "CSV file to upload",
-                        "name": "file",
+                        "name": "uploadFile",
                         "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Year",
+                        "name": "year",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Cohort",
+                        "name": "cohort",
+                        "in": "query",
                         "required": true
                     }
                 ],

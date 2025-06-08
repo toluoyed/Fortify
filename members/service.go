@@ -3,6 +3,7 @@ package members
 import (
 	"fmt"
 	"os"
+	"time"
 	"strconv"
 	"strings"
 	"errors"
@@ -122,15 +123,19 @@ func UpdateMember(id int, requestMember Member, db *gorm.DB) (Member,error){
 	}
 	if requestMember.Session1 != nil {
         *member.Session1 = *requestMember.Session1
+		member.Session1CompletionTime = time.Now()
     }
     if requestMember.Session2 != nil {
         *member.Session2 = *requestMember.Session2
+		member.Session2CompletionTime = time.Now()
     }
     if requestMember.Session3 != nil {
         *member.Session3 = *requestMember.Session3
+		member.Session3CompletionTime = time.Now()
     }
     if requestMember.Session4 != nil {
         *member.Session4 = *requestMember.Session4
+		member.Session4CompletionTime = time.Now()
     }
 
 	return member, db.Save(&member).Error

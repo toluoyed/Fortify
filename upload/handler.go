@@ -15,7 +15,9 @@ import (
 // @Summary Upload a file
 // @Description Upload a CSV file that contains fortify members
 // @Accept multipart/form-data
-// @Param file formData file true "CSV file to upload"
+// @Param uploadFile formData file true "CSV file to upload"
+// @Param year query int true "Year"
+// @Param cohort query string true "Cohort"
 // @Success 200
 // @Failure 400
 // @Router /upload [post]

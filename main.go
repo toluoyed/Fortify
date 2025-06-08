@@ -49,11 +49,11 @@ func main() {
 	// Swagger UI
 	http.HandleFunc("/swagger/", httpSwagger.WrapHandler)
 
-	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/ users/login", func(w http.ResponseWriter, r *http.Request) {
 		users.LoginHandler(w,r,db)
 	})
 
-	http.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/users/register", func(w http.ResponseWriter, r *http.Request) {
 		users.CreateUserHandler(w,r,db)
 	})
 

@@ -28,8 +28,11 @@ func UpdateUser(id int, requestUser User, db *gorm.DB) (User,error){
 
 	updates := map[string]interface{}{}
 
-    if requestUser.Name != "" {
-        updates["name"] = requestUser.Name
+    if requestUser.FirstName != "" {
+        updates["first_name"] = requestUser.FirstName
+    }
+	if requestUser.LastName != "" {
+        updates["last_name"] = requestUser.LastName
     }
     if requestUser.Email != "" {
         updates["email"] = requestUser.Email
@@ -39,7 +42,7 @@ func UpdateUser(id int, requestUser User, db *gorm.DB) (User,error){
     }
 	role := requestUser.Role
 	if role != "" && role == "SUPERUSER" || role == "USER"{
-		updates["Role"] = Role(role)
+		updates["role"] = Role(role)
 	}
 
 

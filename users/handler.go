@@ -16,9 +16,11 @@ import (
 // @Description Login
 // @Accept json
 // @Produce json
+// @Param email body string true "Email to login"
+// @Param password body string true "Password to login"
 // @Success  200
 // @Failure 400
-// @Router /login [post]
+// @Router /users/login [post]
 func LoginHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB){
 	
 	if r.Method != http.MethodPost {
@@ -27,7 +29,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB){
 	}
 
 	var req struct {
-		Username string `json:"username"`
+		Email string `json:"email"`
 		Password string `json:"password"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -36,14 +38,14 @@ func LoginHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB){
 	}
 
 	var user User
-	result := db.Where("name = ?", req.Username).First(&user)
+	result := db.Where("email = ?", req.Email).First(&user)
 	if result.Error != nil || !utils.CheckPasswordHash(req.Password, user.Password) {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		return
 	}
 
-	accessToken, _ := utils.CreateToken(user.Name)
-	refreshToken, _ := utils.GenerateRefreshToken(user.Name)
+	accessToken, _ := utils.CreateToken(user.FirstName)
+	refreshToken, _ := utils.GenerateRefreshToken(user.FirstName)
 
 	json.NewEncoder(w).Encode(map[string]string{
 		"access_token":  accessToken,
@@ -51,7 +53,18 @@ func LoginHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB){
 	})
 }
 
-
+// @Tags users
+// @Summary Create a user
+// @Description Create user details and information
+// @Accept json
+// @Produce json
+// @Param first name body string true "First Name"
+// @Param last name body string true "Last Name"
+// @Param email body string true "Email"
+// @Param password body string true "Password"
+// @Success  200
+// @Failure 400
+// @Router /users/register [post]
 func CreateUserHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB) {
 	var user User
 	err := json.NewDecoder(r.Body).Decode(&user)
@@ -63,7 +76,7 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB) {
 	fmt.Sprintf("User: %v", user)
 
 	// Validate input
-	if user.Name == "" || user.Email == "" || user.Password == "" {
+	if user.FirstName == "" || user.LastName == "" || user.Email == "" || user.Password == "" {
 		http.Error(w, "Missing required fields", http.StatusBadRequest)
 		return
 	}

@@ -25,6 +25,10 @@ type Member struct {
 	Session2 *bool `gorm:"default:false" json:"session2"`
 	Session3 *bool `gorm:"default:false" json:"session3"`
 	Session4 *bool `gorm:"default:false" json:"session4"`
+	Session1CompletionTime time.Time
+	Session2CompletionTime time.Time
+	Session3CompletionTime time.Time
+	Session4CompletionTime time.Time
 	Status Status `gorm:"type:status;default:'INCOMPLETE';not null" json:"status"`
 	CreatedAt time.Time
 }

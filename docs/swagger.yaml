@@ -67,6 +67,19 @@ paths:
       consumes:
       - application/json
       description: Login
+      parameters:
+      - description: Username to login
+        in: body
+        name: username
+        required: true
+        schema:
+          type: string
+      - description: Password to login
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
       produces:
       - application/json
       responses:
@@ -168,9 +181,19 @@ paths:
       parameters:
       - description: CSV file to upload
         in: formData
-        name: file
+        name: uploadFile
         required: true
         type: file
+      - description: Year
+        in: query
+        name: year
+        required: true
+        type: integer
+      - description: Cohort
+        in: query
+        name: cohort
+        required: true
+        type: string
       responses:
         "200":
           description: OK
