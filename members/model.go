@@ -29,7 +29,7 @@ type Member struct {
 	Session2CompletionTime time.Time
 	Session3CompletionTime time.Time
 	Session4CompletionTime time.Time
-	Status Status `gorm:"type:status;default:'INCOMPLETE';not null" json:"status"`
+	Status Status `gorm:"type:status;default:INCOMPLETE;not null" json:"status"`
 	CreatedAt time.Time
 }
 

@@ -16,6 +16,11 @@ import (
 // @Description Create a single fortify member
 // @Accept json
 // @Produce json
+// @Param first_name body string true "First Name"
+// @Param last_name body string true "Last Name"
+// @Param email body string true "Email"
+// @Param cohort body string true "Cohort"
+// @Param year body int true "Year"
 // @Success  200
 // @Failure 400
 // @Router /members [post]

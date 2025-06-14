@@ -58,8 +58,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB){
 // @Description Create user details and information
 // @Accept json
 // @Produce json
-// @Param first name body string true "First Name"
-// @Param last name body string true "Last Name"
+// @Param first_name body string true "First Name"
+// @Param last_name body string true "Last Name"
 // @Param email body string true "Email"
 // @Param password body string true "Password"
 // @Success  200

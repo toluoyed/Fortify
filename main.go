@@ -35,12 +35,7 @@ func main() {
 
 	// db.Debug().Exec("CREATE TYPE role AS ENUM ('USER','SUPERUSER')")
 
-	// err := db.AutoMigrate(&members.Member{})
-	// if err != nil {
-	// 	log.Fatalf("Failed to migrate the database: %v", err)
-	// }
-
-	// err := db.AutoMigrate(&user.User{})
+	// err := db.AutoMigrate(&members.Member{},&users.User{})
 	// if err != nil {
 	// 	log.Fatalf("Failed to migrate the database: %v", err)
 	// }
@@ -49,7 +44,7 @@ func main() {
 	// Swagger UI
 	http.HandleFunc("/swagger/", httpSwagger.WrapHandler)
 
-	http.HandleFunc("/ users/login", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/users/login", func(w http.ResponseWriter, r *http.Request) {
 		users.LoginHandler(w,r,db)
 	})
 

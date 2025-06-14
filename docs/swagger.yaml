@@ -17,12 +17,20 @@ definitions:
         type: string
       session1:
         type: boolean
+      session1CompletionTime:
+        type: string
       session2:
         type: boolean
+      session2CompletionTime:
+        type: string
       session3:
         type: boolean
+      session3CompletionTime:
+        type: string
       session4:
         type: boolean
+      session4CompletionTime:
+        type: string
       status:
         $ref: '#/definitions/members.Status'
       year:
@@ -50,9 +58,11 @@ definitions:
         type: string
       email:
         type: string
+      first_name:
+        type: string
       id:
         type: integer
-      name:
+      last_name:
         type: string
       password:
         type: string
@@ -62,34 +72,6 @@ definitions:
 info:
   contact: {}
 paths:
-  /login:
-    post:
-      consumes:
-      - application/json
-      description: Login
-      parameters:
-      - description: Username to login
-        in: body
-        name: username
-        required: true
-        schema:
-          type: string
-      - description: Password to login
-        in: body
-        name: password
-        required: true
-        schema:
-          type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Bad Request
-      summary: Login
-      tags:
-      - users
   /members:
     get:
       consumes:
@@ -126,6 +108,37 @@ paths:
       consumes:
       - application/json
       description: Create a single fortify member
+      parameters:
+      - description: First Name
+        in: body
+        name: first_name
+        required: true
+        schema:
+          type: string
+      - description: Last Name
+        in: body
+        name: last_name
+        required: true
+        schema:
+          type: string
+      - description: Email
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      - description: Cohort
+        in: body
+        name: cohort
+        required: true
+        schema:
+          type: string
+      - description: Year
+        in: body
+        name: year
+        required: true
+        schema:
+          type: integer
       produces:
       - application/json
       responses:
@@ -256,6 +269,74 @@ paths:
         "400":
           description: Bad Request
       summary: Update a user
+      tags:
+      - users
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Login
+      parameters:
+      - description: Email to login
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      - description: Password to login
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Login
+      tags:
+      - users
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      description: Create user details and information
+      parameters:
+      - description: First Name
+        in: body
+        name: first_name
+        required: true
+        schema:
+          type: string
+      - description: Last Name
+        in: body
+        name: last_name
+        required: true
+        schema:
+          type: string
+      - description: Email
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      - description: Password
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Create a user
       tags:
       - users
 swagger: "2.0"
