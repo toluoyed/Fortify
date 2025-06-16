@@ -10,9 +10,20 @@ func CreateUser(user *User, db *gorm.DB) error{
 	return result.Error
 }
 
-func GetUsers(db *gorm.DB) ([]User,error){
+func GetUser(id int, db *gorm.DB) (User,error){
+	var user User
+	result := db.First(&user, id)
+	if result.Error != nil {
+		log.Printf("Error getting user with id = %d: %v", id, result.Error)
+		return user,result.Error
+	}
+	
+	return user, result.Error
+}
+
+func GetAllUsers(db *gorm.DB) ([]User,error){
 	var users []User
-	result := db.Find(&users)
+	result := db.Order("first_name ASC").Find(&users)
 	
 	return users, result.Error
 }

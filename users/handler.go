@@ -48,6 +48,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB){
 	refreshToken, _ := utils.GenerateRefreshToken(user.FirstName)
 
 	json.NewEncoder(w).Encode(map[string]string{
+		"user_id": strconv.Itoa(int(user.ID)),
 		"access_token":  accessToken,
 		"refresh_token": refreshToken,
 	})
@@ -147,8 +148,8 @@ func UpdateUserHandler(w http.ResponseWriter, idStr string, r *http.Request, db 
 // @Success  200 {array} User
 // @Failure 400
 // @Router /users [get]
-func GetUserHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB) {
-	users, err := GetUsers(db)
+func GetAllUsersHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB) {
+	users, err := GetAllUsers(db)
 	if err != nil{
 		if _, ok := err.(*utils.ValidationError); ok{
 			http.Error(w, "Invalid parameter", http.StatusBadRequest)
@@ -163,6 +164,38 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(users)
+}
+
+// @Tags users
+// @Summary Get user via id
+// @Description Get a user using a user id
+// @Accept json
+// @Produce json
+// @Success  200 User
+// @Failure 400
+// @Router /users/{id} [get]
+func GetUserHandler(w http.ResponseWriter, idStr string, r *http.Request, db *gorm.DB) {
+
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "Invalid user ID", http.StatusBadRequest)
+		return
+	}
+
+	var user User
+	user,err = GetUser(id, db)
+	if err != nil{
+		if errors.Is(err, gorm.ErrRecordNotFound){
+			http.Error(w, fmt.Sprintf("User with id = %d not found", id), http.StatusNotFound)
+			return
+		}
+		http.Error(w, fmt.Sprintf("Failed to get user: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	log.Printf("Successfully retrieved user with id %d", id)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(user)
 }
 
 // @Tags users

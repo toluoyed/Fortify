@@ -7,7 +7,7 @@ import(
 	"encoding/json"
 	"gorm.io/gorm"
 	"errors"
-	"regexp"
+	"strings"
 	"golang.org/x/crypto/bcrypt"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -35,12 +35,11 @@ func IsDuplicateEntryError(err error) bool {
 	return errors.Is(err, gorm.ErrDuplicatedKey)
 }
 
-func GetIDFromPath(path string) string {
+func GetIDFromPath(path string,) string {
 	// Match "/members/{id}" pattern
-	re := regexp.MustCompile(`^/members/([0-9-]+)$`)
-	matches := re.FindStringSubmatch(path)
-	if len(matches) > 1 {
-		return matches[1]
+	parts := strings.Split(strings.Trim(path, "/"), "/")
+	if len(parts) == 2 {
+		return parts[1]
 	}
 	return ""
 }

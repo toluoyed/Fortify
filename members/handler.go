@@ -119,7 +119,7 @@ func UpdateMemberHandler(w http.ResponseWriter, idStr string, r *http.Request, d
 		return
 	}
 
-	log.Printf("Successfully update member with id %d", id)
+	log.Printf("Successfully updated member with id %d", id)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(member)
 }

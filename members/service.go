@@ -84,10 +84,11 @@ func GetMembers(cohortFilter string, yearFilter string, statusFilter string, db 
 	if statusFilter != "" {
 		query = query.Where("status = ?", statusFilter)
 	}
-	if cohortFilter == "" && statusFilter == "" && yearFilter == ""{
-		result := db.Find(&members)
-		return members, result.Error
-	}
+	// if cohortFilter == "" && statusFilter == "" && yearFilter == ""{
+	// 	result := db.Find(&members)
+	// 	return members, result.Error
+	// }
+	query = query.Order("first_name ASC")
 	result := query.Find(&members)
 	return members, result.Error
 

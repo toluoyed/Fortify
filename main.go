@@ -72,7 +72,7 @@ func main() {
 
 		id := utils.GetIDFromPath(r.URL.Path)
 		if id == "" {
-			http.Error(w, "Invalid member ID", http.StatusBadRequest)
+			http.Error(w, "Missing Member ID", http.StatusBadRequest)
 			return
 		}
 		switch r.Method {
@@ -89,7 +89,7 @@ func main() {
 	http.Handle("/users", auth.AuthMiddleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		
 		if r.Method == http.MethodGet {
-			users.GetUserHandler(w,r,db)
+			users.GetAllUsersHandler(w,r,db)
 		}else{
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		}
@@ -100,10 +100,12 @@ func main() {
 
 		id := utils.GetIDFromPath(r.URL.Path)
 		if id == "" {
-			http.Error(w, "Invalid user ID", http.StatusBadRequest)
+			http.Error(w, "Missing User ID", http.StatusBadRequest)
 			return
 		}
 		switch r.Method {
+		case http.MethodGet:
+			users.GetUserHandler(w,id,r,db)
 		case http.MethodPost:
 			users.UpdateUserHandler(w,id,r,db)
 		case http.MethodDelete:
