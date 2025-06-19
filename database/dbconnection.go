@@ -14,20 +14,8 @@ import(
 
 func GetConnection() *gorm.DB {
 
-	// host := "localhost"
-	// port := "5432"
-	// user := "fortifyuser"
-	// password := "mypassword"
-	// dbname := "fortifydb"
+	
 	dburl := os.Getenv("DATABASE_URL")
-
-	// Format connection string
-	// psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-	// 	host, port, user, password, dbname)
-	
-	// fmt.Printf("Psql: %v", psqlInfo)
-	
-	// db, err := sql.Open("postgres", psqlInfo)
 
 	db, err := sql.Open("postgres", dburl)
 
