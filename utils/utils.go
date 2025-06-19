@@ -12,7 +12,7 @@ import(
 	"github.com/golang-jwt/jwt/v5"
 )
 
-const SecretKey = "2b87694969af1987c4542c2349a0948569f22f63c2da0c01dff1e0404edd37e27d6cb706507cc3fb50edba793041686fcf81749d00457253c0928f3b5b8cfcee"
+
 const TokenExpiration = 4
 const RefreshTokenExpiration = 2
 var secretKey = []byte(SecretKey)
